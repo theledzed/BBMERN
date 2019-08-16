@@ -18,6 +18,7 @@ users.post('/register', (req, res) =>{
         last_name: req.body.last_name,
         email: req.body.email,
         password: req.body.password,
+        userAdmin: req.body.userAdmin,
         created: today
     }
 
@@ -54,15 +55,21 @@ users.post('/login', (req, res) =>{
     .then(user => {
         if(user){
             if(bcrypt.compareSync(req.body.password, user.password)){
+                
                 const payload = {
                     _id: user._id,
-                    first_name: user.first_name,
+                    first_name: req.body.first_name,
                     last_name: user.last_name,
-                    email: user.email
+                    email: user.email,
+                    userAdmin: user.userAdmin
                 }
+
                 let token = jwt.sign(payload, process.env.SECRET_KEY,{
                     expiresIn: 1440
                 })
+
+                
+
                 res.send(token)
             }else{
                 res.json({error: "User does not exist" })

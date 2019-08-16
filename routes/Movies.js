@@ -58,4 +58,7 @@ movies.get('/movie/register', (req, res) =>{
       })
   })
 
+
+
+  
 module.exports = movies 

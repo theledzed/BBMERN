@@ -15,8 +15,22 @@ import {
   AutoComplete,
   DatePicker
 } from "antd";
+import jwt_decode from "jwt-decode";
 
 class Navbar extends Component {
+  state = {
+    userAdmin: null
+  };
+
+  componentWillMount() {
+    const token = localStorage.usertoken;
+    const decoded = jwt_decode(token);
+
+    this.setState({
+      userAdmin: decoded.userAdmin
+    });
+  }
+
   logOut = e => {
     e.preventDefault();
     localStorage.removeItem("usertoken");
@@ -52,12 +66,14 @@ class Navbar extends Component {
     const userLink = (
       <div className="nav-bar">
         <ul>
-          <li>
-            <Link to="/profile">
-              {" "}
-              <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-            </Link>
-          </li>
+          {this.state.userAdmin === true ? (
+            <li>
+              <Link to="/profile">
+                {" "}
+                <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+              </Link>
+            </li>
+          ) : null}
           <li>
             <Link to="/addmovies">
               {" "}
