@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"mernloginreg.movies"}],"uuid":"5ac804d691714d839587e4084cd82470"}
