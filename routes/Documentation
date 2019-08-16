@@ -1,0 +1,42 @@
+
+
+Name: registerMovie
+Path: movies/register/movie
+type:POST
+Body: {
+        tittle: 'Avengers' //String,
+        director_name: 'Marvel' //String,
+        date: { fisrtDate:20/05/1999, secondDate: 30/06/1999} //Object,
+        time: '01,30,05' //String,
+        captchaToken: token //String,
+}
+
+
+Name: moviesRegistered
+type:GET
+Path: movies//movie/register
+
+
+Name: userRegister
+Path: users/register
+type:POST
+Body:{
+      first_name: 'Cristopher' //String,
+        last_name: 'Flores' //String,
+        email: 'cris@cris.com' //String,
+        password: '123' //String,
+        userAdmin: true //Boolean,
+}
+
+
+Name: login
+Path: users/login
+type:POST
+Body:{
+    email: 'cris@cris.com' //String
+    password: '123' //String
+}
+
+Name: UserInformation
+Path: users/profile
+type:GET
