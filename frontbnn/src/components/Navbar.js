@@ -15,12 +15,21 @@ import {
   AutoComplete,
   DatePicker
 } from "antd";
+import jwt_decode from "jwt-decode";
 
 class Navbar extends Component {
   state = {
     userAdmin: null
   };
 
+  componentWillMount() {
+    const token = localStorage.usertoken ? localStorage.usertoken : null;
+    const decoded = token === null ? {} : jwt_decode(token);
+
+    this.setState({
+      userAdmin: decoded.userAdmin
+    });
+  }
   logOut = e => {
     e.preventDefault();
     localStorage.removeItem("usertoken");

@@ -6,11 +6,21 @@ import Login from "../src/components/login";
 import WrappedRegister from "../src/components/Register";
 import Profile from "../src/components/Profile";
 import WrappedDashboard from "../src/components/addMovies";
+import jwt_decode from "jwt-decode";
 
 class App extends Component {
   state = {
     userAdmin: null
   };
+
+  componentWillMount() {
+    const token = localStorage.usertoken ? localStorage.usertoken : null;
+    const decoded = token === null ? {} : jwt_decode(token);
+
+    this.setState({
+      userAdmin: decoded.userAdmin
+    });
+  }
 
   render() {
     return (
