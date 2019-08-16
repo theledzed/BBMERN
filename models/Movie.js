@@ -23,6 +23,10 @@ const MovieSchema = new Schema({
   captchaToken:{
     type: String,
     required: true,
+  },
+  createdAt:{
+    type: Date,
+    default: Date.now
   }
 });
 

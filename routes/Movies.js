@@ -3,6 +3,7 @@ const movies = express.Router()
 const cors = require("cors")
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
+const moment = require("moment")
 
 const Movie = require("../models/Movie")
 
@@ -19,7 +20,13 @@ movies.post('/register/movie', (req, res) =>{
         time: req.body.time,
         today: today,
         captchaToken: req.body.captchaToken,
+        createdAt: req.body.createdAt,
     }
+
+    const timecreated = moment(Movie.findOne({createdAt: today})._conditions.createdAt).format('LT');
+    console.log('timecreated', timecreated);
+    
+    
 
     Movie.findOne({
         tittle: req.body.tittle
