@@ -35,6 +35,7 @@ export const registerMovie = movie => {
             director_name: movie.director_name,
             date: movie.date,
             time: movie.time,
+            captchaToken: movie.captchaToken
         }).then(res => {
             return res.data
         }).catch((e)=>{
