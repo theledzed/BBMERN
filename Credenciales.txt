@@ -1,0 +1,11 @@
+github:
+
+el repositorio esta publico cualquier persona tiene acceso a el
+
+
+Mongo atlas:
+
+user: theledzed
+
+pass: iddqdidkfa2
+

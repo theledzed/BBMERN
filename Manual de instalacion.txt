@@ -1,0 +1,24 @@
+Backend:
+
+Instalacion:
+
+npm install --save-dev nodemon
+npm i
+
+Ambientacion:
+
+npm run dev 
+
+
+Frontend:
+
+npm i
+
+
+Ambientacion: 
+
+npm start
+
+
+todas las demas dependencias estan en el package.json me asegure de darles --save para que no hubiese problemas
+al correr el front y el back
