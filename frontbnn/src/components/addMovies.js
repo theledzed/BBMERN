@@ -37,8 +37,6 @@ class Dashboard extends PureComponent {
   };
 
   selectTime = (time, timeString) => {
-    console.log(timeString);
-
     this.setState({ duration: timeString });
   };
 
@@ -55,7 +53,7 @@ class Dashboard extends PureComponent {
 
     registerMovie(movie).then(res => {
       if (res) {
-        console.log("jajajajjaa");
+        console.log("res", res);
       }
     });
   };
