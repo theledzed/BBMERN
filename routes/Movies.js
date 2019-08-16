@@ -17,14 +17,15 @@ movies.post('/register/movie', (req, res) =>{
         director_name: req.body.director_name,
         date: req.body.date,
         time: req.body.time,
-        today: today
+        today: today,
+        captchaToken: req.body.captchaToken,
     }
 
     Movie.findOne({
         tittle: req.body.tittle
     })
     .then(movie =>{
-        if(!movie){
+        if(!movie && req.body.captchaToken !== ''){
             bcrypt.hash(() =>{
                 Movie.create(movieData)
                 .then(movie =>{

@@ -19,6 +19,10 @@ const MovieSchema = new Schema({
   time: {
     type: String,
     required: true
+  },
+  captchaToken:{
+    type: String,
+    required: true,
   }
 });
 

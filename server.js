@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-const mongoURI = "mongodb://localhost:27017/mernloginreg";
+const mongoURI = "mongodb+srv://cris:cris123@cluster0-h7cja.mongodb.net/test?retryWrites=true&w=majority";
 
 mongoose
   .connect(mongoURI, { useNewUrlParser: true })

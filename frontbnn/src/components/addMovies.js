@@ -18,6 +18,7 @@ import {
 } from "antd";
 import { registerMovie } from "./UserFunctions";
 import moment from "moment";
+import Recaptcha from "react-recaptcha";
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -30,13 +31,15 @@ class Dashboard extends PureComponent {
     movieTitle: "",
     name_director: "",
     date: "",
-    duration:"",
+    duration: "",
+    token: "",
+    register: true
   };
 
   selectTime = (time, timeString) => {
     console.log(timeString);
-    
-    this.setState({ duration: timeString})
+
+    this.setState({ duration: timeString });
   };
 
   onSubmit = e => {
@@ -47,6 +50,7 @@ class Dashboard extends PureComponent {
       director_name: this.state.name_director,
       date: this.state.date,
       time: this.state.duration,
+      captchaToken: this.state.token
     };
 
     registerMovie(movie).then(res => {
@@ -97,6 +101,10 @@ class Dashboard extends PureComponent {
       );
     }
     this.setState({ autoCompleteResult });
+  };
+
+  verifyCallback = r => {
+    this.setState({ token: r, register: false });
   };
 
   render() {
@@ -153,16 +161,7 @@ class Dashboard extends PureComponent {
           >
             <h1>Nueva Pelicula</h1>
 
-            <Form.Item
-              label={
-                <span>
-                  Titulo&nbsp;
-                  <Tooltip title="What do you want others to call you?">
-                    <Icon type="question-circle-o" />
-                  </Tooltip>
-                </span>
-              }
-            >
+            <Form.Item label={<span>Titulo</span>}>
               {getFieldDecorator("nickname", {
                 rules: [
                   {
@@ -182,16 +181,7 @@ class Dashboard extends PureComponent {
               )}
             </Form.Item>
 
-            <Form.Item
-              label={
-                <span>
-                  Director&nbsp;
-                  <Tooltip title="What do you want others to call you?">
-                    <Icon type="question-circle-o" />
-                  </Tooltip>
-                </span>
-              }
-            >
+            <Form.Item label={<span>Director</span>}>
               {getFieldDecorator("director", {
                 rules: [
                   {
@@ -224,26 +214,6 @@ class Dashboard extends PureComponent {
                 />
               )}
             </Form.Item>
-            <Form.Item
-              label="Captcha"
-              extra="We must make sure that your are a human."
-            >
-              <Row gutter={8}>
-                <Col span={12}>
-                  {getFieldDecorator("captcha", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please input the captcha you got!"
-                      }
-                    ]
-                  })(<Input />)}
-                </Col>
-                <Col span={12}>
-                  <Button>Get captcha</Button>
-                </Col>
-              </Row>
-            </Form.Item>
             <Form.Item label="Duracion">
               {getFieldDecorator("timer")(
                 <TimePicker
@@ -253,18 +223,21 @@ class Dashboard extends PureComponent {
                 />
               )}
             </Form.Item>
-
-            <Form.Item {...tailFormItemLayout}>
-              {getFieldDecorator("agreement", {
-                valuePropName: "checked"
-              })(
-                <Checkbox>
-                  I have read the <a href="">agreement</a>
-                </Checkbox>
-              )}
+            <Form.Item label="Captcha">
+              <Recaptcha
+                sitekey="6Lc1S7MUAAAAAENV-52AdNHRsLJ0jdeuyneE1PzD"
+                render="explicit"
+                verifyCallback={this.verifyCallback}
+              />
+              ,
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-              <Button onClick={this.onSubmit} type="primary" htmlType="submit">
+              <Button
+                disabled={this.state.register}
+                onClick={this.onSubmit}
+                type="primary"
+                htmlType="submit"
+              >
                 Register
               </Button>
             </Form.Item>
