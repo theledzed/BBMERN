@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import "../App.css";
 import "antd/dist/antd.css";
 import { Input, Row, Col, Button, Card } from "antd";
-import { moviesRegistered } from "./UserFunctions";
+import { moviesRegistered, deleteMovie } from "./UserFunctions";
 
 class Profile extends Component {
   constructor() {
@@ -38,17 +38,14 @@ class Profile extends Component {
 
   render() {
     const gridStyle = {
-      width: '25%',
-      textAlign: 'center',
+      width: "25%",
+      textAlign: "center"
     };
     return (
       <div>
         <div>
           <Col span={2} />
-          <Col span={22}>
-            {" "}
-          
-          </Col>
+          <Col span={22}> </Col>
         </div>
         <div>
           <Col span={2} />
@@ -65,6 +62,24 @@ class Profile extends Component {
                         <p>Fin de exhibicion {item.date.secondDate}</p>
                         <p>Duracion: {item.time}</p>
                         <p>ID: {item._id}</p>
+                        <Button
+                          onClick={() => {
+                            deleteMovie(item._id).then(res => {
+                              if (res) {
+                                moviesRegistered().then(res => {
+                                  if (res) {
+                                    const response = res;
+                                    this.setState({
+                                      moviesRegistered: response
+                                    });
+                                  }
+                                });
+                              }
+                            });
+                          }}
+                        >
+                          Borrar
+                        </Button>
                       </Card.Grid>
                     );
                   })
