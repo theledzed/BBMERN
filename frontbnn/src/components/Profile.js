@@ -4,6 +4,7 @@ import "../App.css";
 import "antd/dist/antd.css";
 import { Input, Row, Col, Button, Card } from "antd";
 import { moviesRegistered, deleteMovie } from "./UserFunctions";
+import { Link, withRouter } from "react-router-dom";
 
 class Profile extends Component {
   constructor() {
@@ -80,6 +81,15 @@ class Profile extends Component {
                         >
                           Borrar
                         </Button>
+                        <Link to="/edit/movie">
+                          <Button
+                            onClick={() => {
+                              localStorage.setItem("idMovie", item._id);
+                            }}
+                          >
+                            Editar
+                          </Button>
+                        </Link>
                       </Card.Grid>
                     );
                   })

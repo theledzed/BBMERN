@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import "../index.css";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { Link, withRouter } from "react-router-dom";
 import {
   Form,
   Input,
@@ -17,7 +16,7 @@ import {
   DatePicker,
   TimePicker
 } from "antd";
-import { registerMovie } from "./UserFunctions";
+import { registerMovie, updateMovie } from "./UserFunctions";
 import moment from "moment";
 import Recaptcha from "react-recaptcha";
 
@@ -25,7 +24,7 @@ const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 const { RangePicker } = DatePicker;
 
-class Dashboard extends PureComponent {
+class EditMovie extends PureComponent {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -49,10 +48,11 @@ class Dashboard extends PureComponent {
       director_name: this.state.name_director,
       date: this.state.date,
       time: this.state.duration,
-      captchaToken: this.state.token
+      captchaToken: this.state.token,
+      _id: localStorage.getItem("idMovie")
     };
 
-    registerMovie(movie).then(res => {
+    updateMovie(movie).then(res => {
       if (res) {
         console.log("res", res);
       }
@@ -158,8 +158,6 @@ class Dashboard extends PureComponent {
             {...formItemLayout}
             onSubmit={this.onSubmit}
           >
-            <h1>Nueva Pelicula</h1>
-
             <Form.Item label={<span>Titulo</span>}>
               {getFieldDecorator("nickname", {
                 rules: [
@@ -231,14 +229,14 @@ class Dashboard extends PureComponent {
               ,
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-                <Button
-                  disabled={this.state.register}
-                  onClick={this.onSubmit}
-                  type="primary"
-                  htmlType="submit"
-                >
-                  Register
-                </Button>
+              <Button
+                disabled={this.state.register}
+                onClick={this.onSubmit}
+                type="primary"
+                htmlType="submit"
+              >
+                Update
+              </Button>
             </Form.Item>
           </Form>
         </Col>
@@ -248,6 +246,6 @@ class Dashboard extends PureComponent {
   }
 }
 
-let WrappedDashboard = Form.create()(Dashboard);
+let WrappedEditMovie = Form.create()(EditMovie);
 
-export default WrappedDashboard;
+export default WrappedEditMovie;
