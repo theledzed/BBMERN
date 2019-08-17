@@ -83,7 +83,7 @@ movies.get("/movie/register", (req, res) => {
 movies.post("/deleted/movie", (req, res) => {
   Movie.remove({ _id: req.body._id })
     .then(movie => {
-      res.json({ status: movie.tittle + " registered!" });
+      res.json({ status: req.body._id + " Deleted!" });
     })
     .catch(e => {
       res.send("error: " + e);
