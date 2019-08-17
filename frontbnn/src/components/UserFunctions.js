@@ -45,6 +45,21 @@ export const registerMovie = movie => {
         })
 }
 
+
+export const deleteMovie = movie => {
+    console.log(movie, 'func');
+    
+    return axios
+        .post('/movies/deleted/movie', {
+            _id: movie
+        }).then(res => {
+            return res.data
+        }).catch((e)=>{
+            console.log('errorLogin', e);
+            
+        })
+}
+
 export const moviesRegistered = movies => {
     return axios
         .get('/movies/movie/register').then(res => {

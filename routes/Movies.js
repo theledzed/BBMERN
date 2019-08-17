@@ -1,71 +1,95 @@
-const express = require("express")
-const movies = express.Router()
-const cors = require("cors")
-const jwt = require('jsonwebtoken')
-const bcrypt = require("bcrypt")
-const moment = require("moment")
+const express = require("express");
+const movies = express.Router();
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const moment = require("moment");
 
-const Movie = require("../models/Movie")
+const Movie = require("../models/Movie");
 
-movies.use(cors())
+movies.use(cors());
 
-process.env.SECRET_KEY = 'secret'
+process.env.SECRET_KEY = "secret";
 
-movies.post('/register/movie', (req, res) =>{
-    const today = new Date()
-    const movieData = {
-        tittle: req.body.tittle,
-        director_name: req.body.director_name,
-        date: req.body.date,
-        time: req.body.time,
-        today: today,
-        captchaToken: req.body.captchaToken,
-        createdAt: req.body.createdAt,
-    }
+movies.post("/register/movie", (req, res) => {
+  const today = new Date();
+  const movieData = {
+    tittle: req.body.tittle,
+    director_name: req.body.director_name,
+    date: req.body.date,
+    time: req.body.time,
+    today: today,
+    captchaToken: req.body.captchaToken,
+    createdAt: req.body.createdAt
+  };
 
-    const timecreated = moment(Movie.findOne({createdAt: today})._conditions.createdAt).format('LT');
-    console.log('timecreated', timecreated);
-    
-    
+  //   const timecreated = Movie.find().skip(db.test.count()-1).forEach(printjson)
 
-    Movie.findOne({
-        tittle: req.body.tittle
-    })
-    .then(movie =>{
-        if(!movie && req.body.captchaToken !== ''){
-            bcrypt.hash(() =>{
-                Movie.create(movieData)
-                .then(movie =>{
-                    res.json({ status: movie.tittle + ' registered!'})
-                }).catch((e)=>{
-                    res.send('error: ' +  e )
-                    
-                })
-            })
-        }else{
-            res.json({error: 'Movie already exists '})
-        }
-    })
-    .catch(e =>{
-        res.send('error: ' + e)
-    })
+  //   console.log("timecreated", timecreated );
 
-})
+  //   if (timecreated > fecha) {
+  //     console.log(
+  //       "time",
+  //       moment(timecreated).format("MMMM Do YYYY, h:mm:ss a"),
+  //       ">",
+  //       moment(fecha).format("MMMM Do YYYY, h:mm:ss a")
+  //     );
+  //   } else {
+  //     console.log(
+  //       "time",
+  //       moment(timecreated).format("MMMM Do YYYY, h:mm:ss a"),
+  //       "<",
+  //       moment(fecha).format("MMMM Do YYYY, h:mm:ss a")
+  //     );
+  //   }
 
-movies.get('/movie/register', (req, res) =>{
-      Movie.find()
-      .then(movie => {
-          if(movie){
-              res.json(movie)
-          }else{
-              res.send("User does not exist")
-          }
-      }).catch((e) =>{
-          res.send('error: ' + e)
-      })
+  Movie.findOne({
+    tittle: req.body.tittle
   })
+    .then(movie => {
+      if (!movie && req.body.captchaToken !== "") {
+        bcrypt.hash(() => {
+          Movie.create(movieData)
+            .then(movie => {
+              res.json({ status: movie.tittle + " registered!" });
+            })
+            .catch(e => {
+              res.send("error: " + e);
+            });
+        });
+      } else {
+        res.json({ error: "Movie already exists " });
+      }
+    })
+    .catch(e => {
+      res.send("error: " + e);
+    });
+});
 
+movies.get("/movie/register", (req, res) => {
+  Movie.find()
+    .then(movie => {
+      if (movie) {
+        res.json(movie);
+      } else {
+        res.send("User does not exist");
+      }
+    })
+    .catch(e => {
+      res.send("error: " + e);
+    });
+});
 
+movies.post("/deleted/movie", (req, res) => {
+    console.log('dddddd', req.body._id);
+    
+  Movie.remove({_id:req.body._id})
+    .then(movie => {
+      res.json({ status: movie.tittle + " registered!" });
+    })
+    .catch(e => {
+      res.send("error: " + e);
+    });
+});
 
-  
-module.exports = movies 
+module.exports = movies;
