@@ -6,6 +6,7 @@ import Login from "../src/components/login";
 import WrappedRegister from "../src/components/Register";
 import Profile from "../src/components/Profile";
 import WrappedDashboard from "../src/components/addMovies";
+import WrappedEditMovie from "../src/components/editMovie";
 import jwt_decode from "jwt-decode";
 
 class App extends Component {
@@ -32,7 +33,11 @@ class App extends Component {
             <Route exact path="/register" component={WrappedRegister} />
             <Route exact path="/login" component={Login} />
             {this.state.userAdmin === true ? (
-              <Route exact path="/profile" component={Profile} />
+              <div>
+                {" "}
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/edit/movie" component={WrappedEditMovie} />
+              </div>
             ) : null}
             <Route exact path="/addmovies" component={WrappedDashboard} />
           </div>

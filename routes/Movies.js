@@ -81,11 +81,27 @@ movies.get("/movie/register", (req, res) => {
 });
 
 movies.post("/deleted/movie", (req, res) => {
-    console.log('dddddd', req.body._id);
-    
-  Movie.remove({_id:req.body._id})
+  Movie.remove({ _id: req.body._id })
     .then(movie => {
       res.json({ status: movie.tittle + " registered!" });
+    })
+    .catch(e => {
+      res.send("error: " + e);
+    });
+});
+
+movies.put("/update/movie", (req, res) => {
+  Movie.update(
+    { _id: req.body._id },
+    {
+     tittle: req.body.tittle,
+     director_name: req.body.director_name,
+     date: req.body.date,
+     time: req.body.time,
+    }
+  )
+    .then(movie => {
+      res.json({ status:  req.body.tittle + " updated!" });
     })
     .catch(e => {
       res.send("error: " + e);
